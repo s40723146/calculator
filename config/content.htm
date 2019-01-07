@@ -1,0 +1,112 @@
+<h1>Python 語法</h1>
+<p>
+<script src="/static/brython.js"></script>
+<script src="/static/brython_stdlib.js"></script>
+<!-- for ggame -->
+<script src="/static/jquery-3.3.1.min.js"></script>
+<script src="/static/jquery-ui.1.12.1.min.js"></script>
+<script src="/static/pixi-3.0.5.min.js"></script>
+<script src="/static/buzz-1.2.1.js"></script>
+<!-- Cango 程式庫 -->
+<script src="/static/Cango-13v08-min.js"></script>
+<script src="/static/CangoAxes-4v01-min.js"></script>
+<script src="/static/gearUtils-05.js"></script>
+<script>
+window.onload=function(){
+brython({debug:1, pythonpath:['/static/']});
+}
+</script>
+</p>
+<p><!-- 導入 FileSaver 與 filereader --></p>
+<p>
+<script src="/static/ace/FileSaver.min.js" type="text/javascript"></script>
+<script src="/static/ace/filereader.js" type="text/javascript"></script>
+</p>
+<p><!-- 導入 ace --></p>
+<p>
+<script src="/static/ace/ace.js" type="text/javascript"></script>
+<script src="/static/ace/ext-language_tools.js" type="text/javascript"></script>
+<script src="/static/ace/mode-python3.js" type="text/javascript"></script>
+<script src="/static/ace/snippets/python.js" type="text/javascript"></script>
+</p>
+<p><!-- 請注意, 這裡使用 Javascript 將 localStorage["py_src"] 中存在近端瀏覽器的程式碼, 由使用者決定存檔名稱--></p>
+<p>
+<script type="text/javascript">
+function doSave(storage_id, filename){
+    var blob = new Blob([localStorage[storage_id]], {type: "text/plain;charset=utf-8"});
+    filename = document.getElementById(filename).value
+    saveAs(blob, filename+".py");
+}
+</script>
+</p>
+<h4>簡易計算機程式</h4>
+<p><!-- 印出版次與關鍵字程式 --></p>
+<p>
+<script type="text/python3">
+from browser import document as doc
+import ace
+# Brython 3.3.4 內建的 container 名稱為  'container' 且 turtle 輸出為 svg 必須使用 div 訂定 id
+Ace = ace.Editor(editor_id="kw_editor", console_id="kw_console", container_id="kw__container", storage_id="kw_py_src" )
+
+Ace.editor.setValue("""# 定義算式
+
+def add(x, y):
+   return x + y
+   
+def subtract(x, y):
+   return x - y
+
+def multiply(x, y):
+   return x * y
+
+def divide(x, y):
+   return x / y
+
+#輸入數字及算式
+
+num1 = int(input("输入第一个数字: "))
+
+choice = input("输入你選擇的算式(+/-/*//):")
+
+num2 = int(input("输入第二个数字: "))
+
+#運算與結果
+
+if choice == '+':
+   print(num1,"+",num2,"=", add(num1,num2))
+
+elif choice == '-':
+   print(num1,"-",num2,"=", subtract(num1,num2))
+
+elif choice == '*':
+   print(num1,"*",num2,"=", multiply(num1,num2))
+
+elif choice == '/':
+   print(num1,"/",num2,"=", divide(num1,num2))
+else:
+   print("輸入錯誤")
+""")
+Ace.editor.scrollToRow(0)
+Ace.editor.gotoLine(0)
+
+# 執行程式, 顯示輸出結果與清除輸出結果及對應按鈕綁定
+doc['kw_run'].bind('click', Ace.run)
+doc['kw_show_console'].bind('click', Ace.show_console)
+doc['kw_clear_console'].bind('click', Ace.clear_console)
+</script>
+</p>
+<p><!-- 用來顯示程式碼的 editor 區域 --></p>
+<div id="kw_editor" style="width: 600px; height: 300px;"></div>
+<p><!-- 以下的表單與按鈕與前面的 Javascript doSave 函式以及 FileSaver.min.js 互相配合 --></p>
+<form><label>Filename: <input id="kw_filename" placeholder="input file name" type="text"/>.py</label> <input onclick="doSave('kw_py_src', 'kw_filename');" type="submit" value="Save"/></form>
+<p><button id="kw_run">Run</button> <button id="kw_show_console">Output</button> <button id="kw_clear_console">清除</button><button onclick="window.location.reload()">Reload</button></p>
+<div style="width: 300px; height: 100px;"><textarea autocomplete="off" id="kw_console" style="margin: 0px; width: 285px; height: 69px;"></textarea></div>
+<h1 style="width: 300px; height: 100px;">程式</h1>
+<script type="text/python3">
+from tkinter
+import tkinter
+mainWin = tkinter.Tk()
+mainWin.title("Hello 雲林SONG")
+mainWin.geometry("320x240")
+mainWin.mainloop()
+<script type="text/python3"></script>
